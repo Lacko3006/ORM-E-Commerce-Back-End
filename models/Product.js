@@ -19,11 +19,11 @@ Product.init(
     },
     product_name: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     price: {
       type: DataTypes.DECIMAL,
-      allowNull: false,
+      allowNull: true,
       validate: {
         isDecimal: true,
       },
@@ -33,7 +33,7 @@ Product.init(
       allowNull: false,
       defaultValue: 10,
       validate: {
-        isNumeric: false,
+        isNumeric: true,
       },
     },
     category_id: {

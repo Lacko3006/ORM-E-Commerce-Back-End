@@ -25,11 +25,11 @@ router.get("/:id", async (req, res) => {
     const productGetId = await Product.findByPk(req.params.id, {
       include: [{ model: Category, Tag, ProductTag }],
     });
-    if (!categoryGetId) {
+    if (!productGetId) {
       res.status(404).json({ message: "No category found with relevant id" });
       return;
     }
-    res.status(200).json(categoryGetId);
+    res.status(200).json(productGetId);
   } catch (err) {
     res.status(500).json(err);
   }
@@ -68,7 +68,7 @@ router.post("/", (req, res) => {
 });
 
 // update product
-router.put("/:id", (req, res) => {
+router.put('/:id', (req, res) => {
   // update product data
   Product.update(req.body, {
     where: {
@@ -83,6 +83,7 @@ router.put("/:id", (req, res) => {
       // get list of current tag_ids
       const productTagIds = productTags.map(({ tag_id }) => tag_id);
       // create filtered list of new tag_ids
+      console.log(req.body.tagIds)
       const newProductTags = req.body.tagIds
         .filter((tag_id) => !productTagIds.includes(tag_id))
         .map((tag_id) => {
@@ -104,7 +105,7 @@ router.put("/:id", (req, res) => {
     })
     .then((updatedProductTags) => res.json(updatedProductTags))
     .catch((err) => {
-      // console.log(err);
+      console.log(err);
       res.status(400).json(err);
     });
 });
